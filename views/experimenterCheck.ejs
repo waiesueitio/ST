@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>ExCheck</title>
+    </head>
+    <body>
+        <script>
+            function enter(){
+                password=prompt("パスワードを入力してください");
+                if(password=="sandcat"){
+                    location.href="/experimenter";
+                }else{
+                    alert("パスワードが違います");
+                }
+            }
+        </script>
+        <form>
+            <input type="button" value="実験者用ページ" onclick="enter()">
+        </form>
+    </body>
+</html>

@@ -1,0 +1,50 @@
+<!--実験者用ページ-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Experimenter</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  </head>
+  <body>
+    <!--キャラクターの表示-->
+    <div id='canvas'></div>
+    <script src='/javascripts/chara.js'></script>
+
+    <!--メッセージ-->
+    <div id="chat-area">
+    <div id="chat">
+        <ul id="messages"></ul>
+    </div>
+    <form id="message_form" action="#">
+        <input id="input_msg" autocomplete="off" onclick="time()"/><button>Send</button>
+    </form>
+    </div>
+
+    <script>
+        var socketio = io();
+        var T;
+        function time(){
+            D=new Date();
+            mm=D.getMonth()+1+'/';
+            dd=D.getDate()+'/';
+            hh=D.getHours()+':';
+            mi=D.getMinutes();
+            T=mm+dd+hh+mi;
+        }
+        $(function(){
+            $('#message_form').submit(function(){
+                socketio.emit('message', $('#input_msg').val());
+                $('#input_msg').val('');
+            return false;
+        });
+        socketio.on('message',function(msg){
+            $('#messages').append($('<li>').text(msg+"  ["+T+"]"));
+      });
+    });
+    </script>　
+    </body> 
+</html>
